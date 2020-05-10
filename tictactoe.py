@@ -63,7 +63,7 @@ def actions(board):
     for row_index in range(3):
         for cell_index in range(3):
             if (board[row_index][cell_index] == EMPTY):
-                possibleActions.add((row_index,cell_index))
+                possibleActions.add((row_index, cell_index))
 
     return possibleActions
 
@@ -107,27 +107,26 @@ def winner(board):
     If there is no winner of the game (either because the game is in progress, or because it ended in a tie),
     the function should return None.
     """
-    if ( row_winner(board[0],X) or
-         row_winner(board[1],X) or
-         row_winner(board[2],X) or
-         col_winner(board,0,X) or
-         col_winner(board,1,X) or
-         col_winner(board,2,X) or
-         tlbr_diag_winner(board,X) or
-         trbl_diag_winner(board,X) ):
+    if (row_winner(board[0], X) or
+        row_winner(board[1], X) or
+        row_winner(board[2], X) or
+        col_winner(board, 0, X) or
+        col_winner(board, 1, X) or
+        col_winner(board, 2, X) or
+        tlbr_diag_winner(board, X) or
+        trbl_diag_winner(board, X)):
         return X
-    elif ( row_winner(board[0],O) or
-           row_winner(board[1],O) or
-           row_winner(board[2],O) or
-           col_winner(board,0,O) or
-           col_winner(board,1,O) or
-           col_winner(board,2,O) or
-           tlbr_diag_winner(board,O) or
-           trbl_diag_winner(board,O) ):
+    elif (row_winner(board[0], O) or
+          row_winner(board[1], O) or
+          row_winner(board[2], O) or
+          col_winner(board, 0, O) or
+          col_winner(board, 1, O) or
+          col_winner(board, 2, O) or
+          tlbr_diag_winner(board, O) or
+          trbl_diag_winner(board, O)):
         return O
     else:
         return None
-
 
 def terminal(board):
     """
@@ -194,7 +193,7 @@ def minimax(board):
                 optimal_score = score
                 optimal_action = action
                 #print(f"BEST SCORE SO FAR! - ({action[0]},{action[1]})")
-            alpha = max(alpha,score)
+            alpha = max(alpha, score)
             if beta <= alpha:
                 # alpha / beta pruning
                 break
@@ -211,24 +210,26 @@ def minimax(board):
                 optimal_score = score
                 optimal_action = action
                 # print(f"BEST SCORE SO FAR! - ({action[0]},{action[1]})")
-            beta = min(beta,score)
+            beta = min(beta, score)
             if beta <= alpha:
                 # alpha / beta pruning
                 break
         # print(f"Choosing best move - ({optimal_action[0]},{optimal_action[1]})")
         return optimal_action
 
+
 def max_value(board, alpha, beta):
     if terminal(board):
         return utility(board)
-    score = -sys.maxsize -1
+    score = -sys.maxsize - 1
     for action in actions(board):
         score = max(score, min_value(result(board, action), alpha, beta))
-        alpha = max(alpha,score)
+        alpha = max(alpha, score)
         if beta <= alpha:
             # alpha / beta pruning
             break
     return score
+
 
 def min_value(board, alpha, beta):
     if terminal(board):
@@ -236,11 +237,12 @@ def min_value(board, alpha, beta):
     score = sys.maxsize
     for action in actions(board):
         score = min(score, max_value(result(board, action), alpha, beta))
-        beta = min(beta,score)
+        beta = min(beta, score)
         if beta <= alpha:
             # alpha / beta pruning
             break
     return score
+
 
 def board_full(board):
     for row in board:
@@ -250,37 +252,42 @@ def board_full(board):
 
     return True
 
+
 def row_winner(row, player):
     """
     Return true if the player has won by placing 3 moves into the row
     """
-    return ( row[0] == player and
-             row[1] == player and
-             row[2] == player )
+    return (row[0] == player and
+            row[1] == player and
+            row[2] == player)
+
 
 def col_winner(board, col_index, player):
     """
     Return true if the player has won by placing 3 moves into column (col_index) of the board
     """
-    return ( board[0][col_index] == player and
-             board[1][col_index] == player and
-             board[2][col_index] == player )
+    return (board[0][col_index] == player and
+            board[1][col_index] == player and
+            board[2][col_index] == player)
+
 
 def tlbr_diag_winner(board, player):
     """
     Return true if the player has won by placing 3 moves into the topleft to bottomright diagonal of the board
     """
-    return ( board[0][0] == player and
-             board[1][1] == player and
-             board[2][2] == player )
+    return (board[0][0] == player and
+            board[1][1] == player and
+            board[2][2] == player)
+
 
 def trbl_diag_winner(board, player):
     """
     Return true if the player has won by placing 3 moves into the topright to bottomleft diagonal of the board
     """
-    return ( board[0][2] == player and
-             board[1][1] == player and
-             board[2][0] == player )
+    return (board[0][2] == player and
+            board[1][1] == player and
+            board[2][0] == player)
+
 
 def print_board(board):
     print(f" {player_token(board[0][0])} | {player_token(board[0][1])} | {player_token(board[0][2])} ")
@@ -289,6 +296,7 @@ def print_board(board):
     print(f"---+---+---")
     print(f" {player_token(board[2][0])} | {player_token(board[2][1])} | {player_token(board[2][2])} ")
 
+
 def player_token(player):
     if (player == X):
         return 'X'
@@ -296,5 +304,4 @@ def player_token(player):
         return 'O'
     else:
         return ' '
-
 

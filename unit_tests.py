@@ -34,7 +34,7 @@ class TestTicTacToe(unittest.TestCase):
     def test_actions_initial(self):
         """Return a set of all of the possible actions that can be taken on a given board."""
         board = initial_state()
-        all_actions = [ (0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2) ]
+        all_actions = [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
         self.assertIsInstance(actions(board), set)
         self.assertEqual(list(actions(board)).sort(), all_actions.sort())
 
@@ -43,7 +43,7 @@ class TestTicTacToe(unittest.TestCase):
         board = [[X, O, EMPTY],
                  [O, EMPTY, X],
                  [X, EMPTY, O]]
-        possible_actions = [ (0,2), (1,1), (2,1) ]
+        possible_actions = [(0, 2), (1, 1), (2, 1)]
         self.assertIsInstance(actions(board), set)
         self.assertEqual(list(actions(board)).sort(), possible_actions.sort())
 
@@ -58,9 +58,9 @@ class TestTicTacToe(unittest.TestCase):
         board = [[X, O, EMPTY],
                  [O, EMPTY, X],
                  [X, EMPTY, O]]
-        invalid_action = (0,0)
+        invalid_action = (0, 0)
         try:
-            result(board,invalid_action)
+            result(board, invalid_action)
         except Exception:
             pass
         else:
@@ -70,19 +70,19 @@ class TestTicTacToe(unittest.TestCase):
         """The returned board state should be the board that would result from taking the original input board,
         and letting the player whose turn it is make their move at the cell indicated by the input action.."""
         board_0 = initial_state()
-        first_move_x = (0,0)
+        first_move_x = (0, 0)
         board_1 = result(board_0, first_move_x)
         self.assertEqual(board_1[0][0], X)
-        second_move_o = (1,1)
+        second_move_o = (1, 1)
         board_2 = result(board_1, second_move_o)
         self.assertEqual(board_2[0][0], X)
         self.assertEqual(board_2[1][1], O)
-        third_move_x = (0,1)
+        third_move_x = (0, 1)
         board_3 = result(board_2, third_move_x)
         self.assertEqual(board_3[0][0], X)
         self.assertEqual(board_3[1][1], O)
         self.assertEqual(board_3[0][1], X)
-        fourth_move_x = (2,2)
+        fourth_move_x = (2, 2)
         board_4 = result(board_3, fourth_move_x)
         self.assertEqual(board_4[0][0], X)
         self.assertEqual(board_4[1][1], O)
@@ -280,7 +280,7 @@ class TestTicTacToe(unittest.TestCase):
         board = [[X, X, EMPTY],
                  [O, O, EMPTY],
                  [EMPTY, EMPTY, EMPTY]]
-        self.assertEqual(minimax(board), (0,2))
+        self.assertEqual(minimax(board), (0, 2))
 
     def test_minimax_choose_from_two_wins(self):
         """The move returned should be the optimal action (i, j) that is one of the allowable actions on the board.
@@ -288,7 +288,7 @@ class TestTicTacToe(unittest.TestCase):
         board = [[X, O, X],
                  [O, X, O],
                  [EMPTY, EMPTY, EMPTY]]
-        self.assertIn(minimax(board), [ (2,0), (2,2)])
+        self.assertIn(minimax(board), [(2, 0), (2, 2)])
 
     def test_minimax_prevent_immediate_loss(self):
         """The move returned should be the optimal action (i, j) that is one of the allowable actions on the board.
@@ -296,7 +296,8 @@ class TestTicTacToe(unittest.TestCase):
         board = [[O, X, EMPTY],
                  [EMPTY, X, EMPTY],
                  [EMPTY, EMPTY, EMPTY]]
-        self.assertEqual(minimax(board), (2,1))
+        self.assertEqual(minimax(board), (2, 1))
+
 
 if __name__ == '__main__':
     unittest.main()
